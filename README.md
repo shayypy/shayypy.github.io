@@ -1,2 +1,0 @@
-# shayypy.github.io
-webstite
