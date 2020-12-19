@@ -1,0 +1,56 @@
+body {
+  background: white;/*#E3E5E8; */
+  font-family: whitney;
+  color: black
+}
+
+body.dark {
+  color: white;
+  background: #36393F;
+}
+
+span.futhark-letter {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+h1 {
+  font-size: 6em;
+  margin: 0
+}
+
+h3 {margin-top: -15px}
+h4 {margin-top: -15px; margin-bottom: 0;}
+a {color: #0067E0; text-decoration: none}
+a:hover {text-decoration: underline}
+a.dark {color: #00B0E2;}
+
+#why-do-i-keep-making-box-websites {
+  text-align: center;
+  margin: auto;
+  width: 90%;
+  max-width: 1000px
+}
+
+#why-do-i-keep-making-box-websites h1 {margin: inherit}
+#why-do-i-keep-making-box-websites h2 {margin-top: 0.5em; margin-bottom: 0;}
+#why-do-i-keep-making-box-websites h3 {margin: inherit}
+#why-do-i-keep-making-box-websites h4 {margin: inherit}
+
+.box {
+  text-align: left;
+  background: #F2F3F5;
+  padding: 10px;
+  padding-left: 20px; 
+  padding-right: 20px;
+  border-style: solid;
+  border-color: #E3E5E8;
+  border-width: 0px 0px 0px 7px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.box.dark {
+  background: #2F3136 !important;
+  border-color: #202225 !important;
+}
