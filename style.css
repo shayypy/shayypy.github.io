@@ -1,56 +1,64 @@
-body {
-  background: white;/*#E3E5E8; */
-  font-family: whitney;
-  color: black
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+html, body {
+    margin: 0;
+    background: #154E52;
+    height: 100%;
+    color: #EDE8E8;
 }
-
-body.dark {
-  color: white;
-  background: #36393F;
-}
-
-span.futhark-letter {
-  padding-left: 2px;
-  padding-right: 2px;
-}
-
-h1 {
-  font-size: 6em;
-  margin: 0
-}
-
-h3 {margin-top: -15px}
-h4 {margin-top: -15px; margin-bottom: 0;}
-a {color: #0067E0; text-decoration: none}
-a:hover {text-decoration: underline}
-a.dark {color: #00B0E2;}
-
-#why-do-i-keep-making-box-websites {
-  text-align: center;
-  margin: auto;
-  width: 90%;
-  max-width: 1000px
-}
-
-#why-do-i-keep-making-box-websites h1 {margin: inherit}
-#why-do-i-keep-making-box-websites h2 {margin-top: 0.5em; margin-bottom: 0;}
-#why-do-i-keep-making-box-websites h3 {margin: inherit}
-#why-do-i-keep-making-box-websites h4 {margin: inherit}
-
+* {font-family: Inter, sans-serif}
+h1,h2,h3 {margin:0}
+a {text-decoration: none; color: #CBCBDF}
+a:hover {font-style: italic}
+a:hover:after {content: '~'}
+a:hover:before {content: '~'}
 .box {
-  text-align: left;
-  background: #F2F3F5;
-  padding: 10px;
-  padding-left: 20px; 
-  padding-right: 20px;
-  border-style: solid;
-  border-color: #E3E5E8;
-  border-width: 0px 0px 0px 7px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+    padding: 20px;
+    background: rgba(29, 138, 124, 0.35);
+    box-shadow: 0 8px 32px 0 rgba(7, 81, 78, 0.37);
+    backdrop-filter: blur(12.0px);
+    -webkit-backdrop-filter: blur(12.0px);
+    border-radius: 10px;
+    /*border: 1px solid rgba(255, 255, 255, 0.18);*/
+    margin-bottom: 25px;
 }
-
-.box.dark {
-  background: #2F3136 !important;
-  border-color: #202225 !important;
+.column {
+    width: 46%;
+    margin: 5px;
+    margin: auto;
+    height: 100%;
+}
+.column-25th-img {
+    height: 90%;
+    border-radius: 10px;
+    margin: 10px;
+}
+.column-25th {
+    width: 50%;
+    margin: 10px;
+    background: #2B9BB4;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.things-thing {
+    display: flex; min-height: 120px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    transform: translateY(0px) translateX(0px);
+}
+.things-thing:hover {transform: translateY(-2px) translateX(-2px); transition: transform 0.2s}
+.things-image {width: 120px; border-radius:10px 0px 0px 10px}
+.things-textarea {width: 100%; border-radius: 0px 10px 10px 0px; padding:15px}
+.things-type-footer-icon {
+    float: right;
+    height: 30px;
+    bottom: 10px;
+    right: 10px;
+    position: absolute;
 }
