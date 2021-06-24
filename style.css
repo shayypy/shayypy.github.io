@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
-
 html, body {
     margin: 0;
     background: #154E52;
@@ -16,49 +15,29 @@ a {text-decoration: none; color: #CBCBDF}
 a:hover {font-style: italic}
 a:hover:after {content: '~'}
 a:hover:before {content: '~'}
+.box-a:hover:after {content: unset}
+.box-a:hover:before {content: unset}
+.box-a:hover {font-style: unset}
 .box {
     padding: 20px;
     background: rgba(29, 138, 124, 0.35);
     box-shadow: 0 8px 32px 0 rgba(7, 81, 78, 0.37);
-    backdrop-filter: blur(12.0px);
-    -webkit-backdrop-filter: blur(12.0px);
     border-radius: 10px;
-    /*border: 1px solid rgba(255, 255, 255, 0.18);*/
     margin-bottom: 25px;
-}
-.column {
-    width: 46%;
-    margin: 5px;
-    margin: auto;
-    height: 100%;
-}
-.column-25th-img {
-    height: 90%;
-    border-radius: 10px;
-    margin: 10px;
-}
-.column-25th {
-    width: 50%;
-    margin: 10px;
-    background: #2B9BB4;
-    height: 50px;
-    padding: 10px;
-    border-radius: 10px;
 }
 .things-thing {
     display: flex; min-height: 120px;
     margin-bottom: 20px;
     transition: transform 0.2s;
-    cursor: pointer;
     transform: translateY(0px) translateX(0px);
+    border-radius: 10px;
 }
+.things-thing>h3 {padding: 15px}
 .things-thing:hover {transform: translateY(-2px) translateX(-2px); transition: transform 0.2s}
-.things-image {width: 120px; border-radius:10px 0px 0px 10px}
-.things-textarea {width: 100%; border-radius: 0px 10px 10px 0px; padding:15px}
+.things-thing>img {height: 120px; width: 120px; border-radius: 10px}
 .things-type-footer-icon {
-    float: right;
-    height: 30px;
+    height: 25px !important;
     bottom: 10px;
-    right: 10px;
+    right: -35px;
     position: absolute;
 }
