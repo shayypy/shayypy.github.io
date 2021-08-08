@@ -15,8 +15,8 @@ a {text-decoration: none; color: #CBCBDF}
 a:hover {font-style: italic}
 a:hover:after {content: '~'}
 a:hover:before {content: '~'}
-.box-a:hover:after, a.hero:hover:after {content: unset}
-.box-a:hover:before, a.hero:hover:before {content: unset}
+.box-a:hover:after {content: unset}
+.box-a:hover:before {content: unset}
 .box-a:hover {font-style: unset}
 .box {
     padding: 20px;
