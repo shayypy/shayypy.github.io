@@ -88,7 +88,7 @@ function App() {
   const [selectedApp, setSelectedApp] = useState(null)
 
   return (
-    <div className='bg-shay-darkteal h-screen p-12 text-white text-lg'>
+    <div className='p-12 text-white text-lg'>
       <div className='max-w-3xl mx-auto h-full'>
         <div className={`bg-shay-teal p-5 rounded-xl ${!hollerOpen ? 'rounded-br-none' : ''} flex`}>
           <div>
