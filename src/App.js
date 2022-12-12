@@ -88,119 +88,115 @@ function App() {
   const [selectedApp, setSelectedApp] = useState(null)
 
   return (
-    <div className='p-12 text-white text-lg'>
-      <div className='max-w-3xl mx-auto h-full'>
-        <div className={`bg-shay-teal p-5 rounded-xl ${!hollerOpen ? 'rounded-br-none' : ''} flex`}>
-          <div>
-            <h1 className='font-bold text-2xl'>👋 hey, i'm shay</h1>
-            <p className='mt-1'>displayed below are some projects that i make &amp; maintain.</p>
-          </div>
-          {/*
-          <img
-            className='rounded-lg max-h-20 ml-auto'
-            src='/cats/pc.png'
-            alt='A picture of a desktop computer with a small, tan cat in its drive bay.'
-          />
-          */}
+    <div className='max-w-3xl mx-auto h-full'>
+      <div className={`bg-shay-teal p-5 rounded-xl ${!hollerOpen ? 'rounded-br-none' : ''} flex`}>
+        <div>
+          <h1 className='font-bold text-xl'>👋 hey, i'm shay</h1>
+          <p className='mt-1'>displayed below are some projects that i make &amp; maintain.</p>
         </div>
-        {hollerOpen ? (
-          <div className='bg-shay-teal px-5 py-3 rounded-xl mt-6'>
-            <div className='flex'>
-              <h1 className='font-bold text-lg'>📣 holler</h1>
-              <div className='ml-auto mr-3 -mt-3'>
-                <button
-                  className='text-4xl opacity-70 hover:opacity-100 transition-opacity select-none absolute'
-                  onClick={() => {setHollerOpen(false)}}
-                  title='Minimize'
-                >
-                  -
-                </button>
-              </div>
+      </div>
+      {hollerOpen ? (
+        <div className='bg-shay-teal px-5 py-3 rounded-xl mt-6'>
+          <div className='flex'>
+            <h1 className='font-bold text-xl'>📣 holler</h1>
+            <div className='ml-auto mr-3 -mt-3'>
+              <button
+                className='text-4xl opacity-70 hover:opacity-100 transition-opacity select-none absolute'
+                onClick={() => {setHollerOpen(false)}}
+                title='Minimize'
+              >
+                -
+              </button>
             </div>
-            <ul className='text-base mt-1'>
-              <li>email @ <a href='mailto:meow@shay.cat' className={linkStyle}>meow@shay.cat</a></li>
-              <li>discord @ <a href='discord://-/users/115238234778370049' className={linkStyle}>shay#0038</a></li>
-            </ul>
           </div>
-        ) : (
-          <div className='w-full flex'>
-            <button
-              className='bg-shay-teal font-bold rounded-b-xl ml-auto px-2 pb-1 -mt-1 hover:translate-y-1 hover:opacity-70 transition'
-              onClick={() => {setHollerOpen(!hollerOpen)}}
-            >
-              📣 holler
-            </button>
-          </div>
-        )}
-        <div className='bg-shay-teal px-5 py-3 rounded-t-xl mt-6'>
-          <h1 className='font-bold text-lg'>🔧 what i'm working on</h1>
+          <ul className='mt-1'>
+            <li>email @ <a href='mailto:meow@shay.cat' className={linkStyle}>meow@shay.cat</a></li>
+            <li>discord @ <a href='discord://-/users/115238234778370049' className={linkStyle}>shay#0038</a></li>
+          </ul>
         </div>
-        {selectedApp === null ? (
-          <div className='flex bg-shay-teal rounded-b-xl px-5 flex-wrap'>
-            {projects.map(project => {
-              return (
-                <button
-                  key={project.name}
-                  onClick={() => {setSelectedApp(project)}}
-                  className='mx-auto hover:-translate-y-1 transition-transform'
-                >
-                  <img src={project.image} className='rounded-xl h-24 mb-5' alt='' title={project.name} />
-                </button>
-              )
-            })}
-          </div>
-        ) : (
-          <div
-            className='bg-shay-teal rounded-b-xl flex'
-            style={{
-              backgroundColor: selectedApp.bgColor,
-              color: selectedApp.textColor
-            }}
+      ) : (
+        <div className='w-full flex'>
+          <button
+            className='bg-shay-teal font-bold rounded-b-xl ml-auto px-2 pb-1 -mt-1 hover:translate-y-1 hover:opacity-70 transition'
+            onClick={() => {setHollerOpen(!hollerOpen)}}
           >
-            <img
-              className='rounded-b-xl my-auto max-h-32 max-w-[30%]'
-              src={selectedApp.image}
-              alt={`${selectedApp.name}'s icon`}
-            />
-            <div className='py-5 px-8'>
-              <div>{selectedApp.summary}</div>
-              <div className='mt-4 text-sm'>
-                <button
-                  className='px-2 py-1 rounded font-bold mr-2 hover:opacity-90 transition-opacity'
-                  style={{
-                    backgroundColor: selectedApp.textColor,
-                    color: selectedApp.bgColor,
-                  }}
-                >
-                  <a href={selectedApp.link}>i wanna see!</a>
-                </button>
-                <button
-                  className='px-2 py-1 rounded font-bold opacity-80 hover:opacity-90 transition-opacity'
-                  onClick={() => {setSelectedApp(null)}}
-                  style={{
-                    backgroundColor: selectedApp.textColor,
-                    color: selectedApp.bgColor,
-                  }}
-                >
-                  nevermind, go back
-                </button>
-              </div>
+            📣 holler
+          </button>
+        </div>
+      )}
+      <div className='bg-shay-teal px-5 py-3 rounded-t-xl mt-6'>
+        <h1 className='font-bold text-xl'>🔧 what i'm working on</h1>
+      </div>
+      {selectedApp === null ? (
+        <div className='flex bg-shay-teal rounded-b-xl px-5 flex-wrap'>
+          {projects.map(project => {
+            return (
+              <button
+                key={project.name}
+                onClick={() => {setSelectedApp(project)}}
+                className='mx-auto hover:-translate-y-1 transition-transform'
+              >
+                <img
+                  src={project.image}
+                  className='rounded-xl h-24 mb-5'
+                  alt={project.name}
+                  title={project.name} 
+                />
+              </button>
+            )
+          })}
+        </div>
+      ) : (
+        <div
+          className='bg-shay-teal rounded-b-xl flex'
+          style={{
+            backgroundColor: selectedApp.bgColor,
+            color: selectedApp.textColor
+          }}
+        >
+          <img
+            className='rounded-b-xl my-auto max-h-32 max-w-[30%]'
+            src={selectedApp.image}
+            alt={selectedApp.name}
+          />
+          <div className='py-5 px-8'>
+            <p>{selectedApp.summary}</p>
+            <div className='mt-4 text-sm'>
+              <button
+                className='px-2 py-1 rounded-lg font-bold mr-2 hover:opacity-90 transition-opacity text-base'
+                style={{
+                  backgroundColor: selectedApp.textColor,
+                  color: selectedApp.bgColor,
+                }}
+              >
+                <a href={selectedApp.link}>i wanna see!</a>
+              </button>
+              <button
+                className='px-2 py-1 mt-2 rounded-lg font-bold opacity-80 hover:opacity-90 transition-opacity text-base'
+                onClick={() => {setSelectedApp(null)}}
+                style={{
+                  backgroundColor: selectedApp.textColor,
+                  color: selectedApp.bgColor,
+                }}
+              >
+                nevermind, go back
+              </button>
             </div>
-            {selectedApp.svg && (
-              <div className='ml-auto mt-auto mr-3 mb-3'>
-                <img src={selectedApp.svg} className='w-8' alt='Platform icon' />
-              </div>
-            )}
           </div>
-        )}
-        <div className='max-w-3xl mx-auto h-full mt-6'>
-          <div className='bg-shay-teal p-5 rounded-xl'>
-            <h1 className='font-bold text-lg'>💰 support me</h1>
-            <p className='mt-1 text-base'>
-              if you like what i make, you can throw some cash my way with <a href='https://paypal.com/paypalme/shaywantsmoney' className={linkStyle}>paypal</a> or <a href='https://ko-fi.com/shayypy' className={linkStyle}>ko-fi</a>.
-              merci beaucoup mon ami 🎩
-            </p>
-          </div>
+          {selectedApp.svg && (
+            <div className='ml-auto mt-auto mr-3 mb-3'>
+              <img src={selectedApp.svg} className='w-8' alt='Platform icon' />
+            </div>
+          )}
+        </div>
+      )}
+      <div className='max-w-3xl mx-auto h-full mt-6'>
+        <div className='bg-shay-teal p-5 rounded-xl'>
+          <h1 className='font-bold text-xl'>💰 support me</h1>
+          <p className='mt-1'>
+            if you like what i make, you can throw some cash my way with <a href='https://paypal.com/paypalme/shaywantsmoney' className={linkStyle}>paypal</a> or <a href='https://ko-fi.com/shayypy' className={linkStyle}>ko-fi</a>.
+            merci beaucoup mon ami 🎩
+          </p>
         </div>
       </div>
     </div>
