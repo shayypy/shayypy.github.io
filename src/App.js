@@ -56,7 +56,7 @@ const projects = [
     bgColor: '#000',
     textColor: '#f91880',
     link: 'https://pollr.shay.cat',
-    image: 'https://shay.cat/images/pollr.png',
+    image: '/images/pollr.png',
     type: 'twitter',
     svg: TwitterLogoColor,
     created: new Date(2022, 0, 31),
@@ -80,6 +80,15 @@ const projects = [
     image: 'https://jerso.fun/images/jerso.png',
     type: 'website',
     created: new Date(2022, 5, 7),
+  },
+  {
+    name: 'NHL Scorebug',
+    summary: 'a scorebug for NHL games 🏒 (goals + shots), intended for display on a dedicated ~4" screen',
+    bgColor: '#ccfbf1',
+    textColor: '#000',
+    link: 'https://github.com/shayypy/nhl-scorebug',
+    image: '/images/scorebug-sm.png',
+    created: new Date(2022, 10, 5),
   },
 ]
 
