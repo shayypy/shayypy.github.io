@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import DiscordLogoColor from './Discord-Logo-Color.svg';
 import TwitterLogoColor from './Twitter-Logo-Blue.svg';
-import DiscordLogoWhite from './Discord-Logo-White.svg';
 import React from 'react';
 
 // todo
@@ -16,11 +15,15 @@ interface ProjectApp {
   summary?: string;
   links?: { name?: string; url: string }[];
   type?: 'discord' | 'twitter' | 'website';
-  svg?: string;
   createdAt?: Date;
   defunctAt?: Date;
   themeColor?: string;
   themeTextColor?: string;
+}
+
+const typeSvgs: Record<string, string> = {
+  discord: DiscordLogoColor,
+  twitter: TwitterLogoColor,
 }
 
 const metaApps: ProjectApp[] = [
@@ -56,13 +59,12 @@ const apps: ProjectApp[] = [
   {
     id: 1,
     name: 'bearger',
-    summary: 'Free & easy-to-use Discord bot with no arbitrary limitations',
+    summary: 'Free & easy-to-use bot with no arbitrary limitations',
     themeColor: '#ffd89d',
     themeTextColor: '#9E5500',
     links: [{ url: 'https://bearger.app'}],
     image: 'https://bearger.app/i/the_boy.png',
     type: 'discord',
-    svg: DiscordLogoColor,
     createdAt: new Date(2019, 6, 1),
   },
   {
@@ -74,7 +76,6 @@ const apps: ProjectApp[] = [
     links: [{ url: 'https://dutils.shay.cat'}],
     image: 'https://cdn.discordapp.com/avatars/792842038332358656/da056550fd65a4d7e4636cb1707ca801.png?size=128',
     type: 'discord',
-    svg: DiscordLogoWhite,
     createdAt: new Date(2020, 9, 12),
   },
   {
@@ -86,7 +87,6 @@ const apps: ProjectApp[] = [
     links: [{ url: 'https://sp.shay.cat'}],
     image: 'https://cdn.discordapp.com/avatars/778802790843678740/ed61e86bf594afc4bebbddda231f2e1a.png?size=128',
     type: 'discord',
-    svg: DiscordLogoColor,
     createdAt: new Date(2020, 10, 18),
   },
   {
@@ -98,7 +98,6 @@ const apps: ProjectApp[] = [
     links: [{ url: 'https://tth.shay.cat'}],
     image: 'https://cdn.discordapp.com/avatars/855292122017169420/937a52ca31fe88f21b9d436235a49e6c.png?size=128',
     type: 'discord',
-    svg: DiscordLogoWhite,
     createdAt: new Date(2021, 5, 17),
   },
   {
@@ -110,7 +109,6 @@ const apps: ProjectApp[] = [
     links: [{ url: 'https://pollr.shay.cat' }, { name: 'GitHub', url: 'https://github.com/shayypy/pollr' }],
     image: '/images/pollr.png',
     type: 'twitter',
-    svg: TwitterLogoColor,
     createdAt: new Date(2022, 0, 31),
   },
   {
@@ -162,7 +160,7 @@ export default function App() {
 
   const [page, setPage] = useState(0);
   const [hoveredApp, setHoveredApp_] = useState<ProjectApp | undefined>(pages[page][0]);
-  const [selectedApp, setSelectedApp] = useState<ProjectApp | undefined>(undefined);
+  const [selectedApp, setSelectedApp_] = useState<ProjectApp | undefined>(undefined);
 
   const setHoveredApp = useCallback(
     (value: ProjectApp | undefined) => {
@@ -177,6 +175,14 @@ export default function App() {
       setHoveredApp_(value);
     },
     [pages]
+  );
+
+  const setSelectedApp = useCallback(
+    (value: ProjectApp | undefined) => {
+      setSelectedApp_(undefined); // Trigger closing animation regardless of new value
+      setTimeout(() => setSelectedApp_(value), 50);
+    },
+    []
   );
 
   useEffect(() => {
@@ -227,7 +233,8 @@ export default function App() {
           break;
         case 'Space':
         case 'Enter':
-          setSelectedApp(hoveredApp)
+          if (selectedApp?.id === hoveredApp?.id) setSelectedApp(undefined);
+          else setSelectedApp(hoveredApp);
           break;
         case 'Escape':
           setSelectedApp(undefined);
@@ -239,7 +246,7 @@ export default function App() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [page, pages, hoveredApp, setHoveredApp, selectedApp])
+  }, [page, pages, hoveredApp, setHoveredApp, selectedApp, setSelectedApp])
 
   const scrollToPage = (num: number) => {
     const element = document.querySelector(`#page-${num}`);
@@ -315,14 +322,21 @@ export default function App() {
                     {selectedApp.name}
                   </p>
                   {selectedApp.createdAt && (
-                    <p
+                    <div
                       className='opacity-80 text-xl font-bold'
                       title={`First released ${selectedApp.createdAt.toLocaleDateString()}`}
                     >
                       {selectedApp.defunctAt
                         ? <>{selectedApp.createdAt.getFullYear()} &#x2014; {selectedApp.defunctAt.getFullYear()}</>
                         : <>Since {selectedApp.createdAt.getFullYear()}</>}
-                    </p>
+                      {selectedApp.type && typeSvgs[selectedApp.type] && (
+                        <>
+                          {' '}on
+                          {' '}<img src={typeSvgs[selectedApp.type]} className='w-6 h-6 inline' alt={selectedApp.type} />
+                          {' '}<span className='capitalize'>{selectedApp.type}</span>
+                        </>
+                      )}
+                    </div>
                   )}
                 </div>
                 <img
@@ -389,7 +403,7 @@ const AppIcon = (
   }: {
     app: ProjectApp,
     hoverState: [ProjectApp | undefined, (value: ProjectApp | undefined) => void],
-    selectState: [ProjectApp | undefined, React.Dispatch<React.SetStateAction<ProjectApp | undefined>>],
+    selectState: [ProjectApp | undefined, (value: ProjectApp | undefined) => void],
   }
 ) => {
   const [hoveredApp, setHoveredApp] = hoverState;
@@ -401,6 +415,9 @@ const AppIcon = (
       onMouseOver={() => setHoveredApp(app)}
       onFocus={() => setHoveredApp(app)}
       onClick={() => selectedApp?.id === app.id ? setSelectedApp(undefined) : setSelectedApp(app)}
+      // Prevent accessibility features from doubling the custom Space/Enter handler we have above
+      // It might be preferable to navigate the grid with accessibility shortcuts instead of using a custom implementation
+      onKeyDown={(e) => e.preventDefault()}
     >
       <img
         className='rounded-3xl aspect-square'
