@@ -185,7 +185,11 @@ export default function App() {
 
   const [page, setPage] = useState(0);
   const [hoveredApp, setHoveredApp_] = useState<ProjectApp | undefined>(pages[page][0]);
-  const [selectedApp, setSelectedApp_] = useState<ProjectApp | undefined>(queryAppId ? [...metaApps, ...apps].find((a) => a.id === Number.parseInt(queryAppId)) : undefined);
+  const [selectedApp, setSelectedApp_] = useState<ProjectApp | undefined>(
+    (queryAppId || window.innerWidth >= 640)
+      ? [...metaApps, ...apps].find((a) => a.id === Number.parseInt(queryAppId ?? '0'))
+      : undefined
+  );
   const [matrixPos, setMatrixPos_] = useState<[number, number]>([0, 0]);
 
   const setHoveredApp = useCallback(
