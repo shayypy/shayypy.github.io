@@ -1,11 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+// @ts-ignore
 import DiscordLogoColor from './Discord-Logo-Color.svg';
+// @ts-ignore
 import TwitterLogoColor from './Twitter-Logo-Blue.svg';
 import React from 'react';
+//import YouTubePlayer from 'youtube-player';
+// @ts-ignore
+//import { GameAbbreviation, tracks } from './music.ts';
+//import { YouTubePlayer as YouTubePlayerT } from 'youtube-player/dist/types';
+//import PlayerStates from 'youtube-player/dist/constants/PlayerStates';
 
 // todo
-// - play acnh/ww music (from youtube?) in background depending on time of day
-//   - jukebox app?
+// - play acnh/ww music in background depending on time of day
+//   - kk slider jukebox app for controlling playback/game to use soundtrack from
 // - ACNH background image on bigger screens
 
 interface ProjectApp {
@@ -135,15 +142,31 @@ const apps: ProjectApp[] = [
 ];
 
 export default function App() {
+  //const [player, setPlayer] = useState<YouTubePlayerT | undefined>(undefined);
+  //const [game, setGame] = useState<GameAbbreviation>('acnh');
   const [now, setNow] = useState(new Date());
+  //const hour = now.getHours();
+  
+  //useEffect(() => {
+  //  console.log('hour changed to', hour);
+  //}, [hour]);
+
+  //const updateTrack = useCallback(() => {
+  //  console.log('update track called')
+  //  if (player) {
+  //    const trackId = tracks[game][hour];
+  //    player.loadVideoById(trackId)
+  //    player.playVideo();
+  //  }
+  //}, [player, game, hour])
 
   useEffect(() => {
     const i = setInterval(() => {
       setNow(new Date());
-    }, 50);
+    }, 500);
 
     return () => clearInterval(i);
-  }, [])
+  }, []);
 
   const pages = useMemo<ProjectApp[][]>(() => {
     // https://stackoverflow.com/a/11318797
@@ -255,8 +278,49 @@ export default function App() {
     }
   }
 
+  // https://github.com/gajus/youtube-player/issues/99
+  //useEffect(() => {
+  //  console.log('effect called');
+  //  if (player) {
+  //    updateTrack();
+  //    return;
+  //  }
+
+  //  const trackId = tracks[game][hour];
+  //  console.log('new track id', trackId);
+
+  //  //const ytPlayer = YouTubePlayer('player', {
+  //  //  videoId: trackId,
+  //  //  playerVars: {
+  //  //    loop: 1,
+  //  //    playlist: trackId,  // https://stackoverflow.com/a/25781957
+  //  //  },
+  //  //});
+  //  const ytPlayer = YouTubePlayer('player');
+
+  //  ytPlayer.loadVideoById(trackId);
+  //  ytPlayer.playVideo().then(() => console.log('loaded & started video', trackId));
+
+  //  const restartVideo = () => {
+  //    ytPlayer.seekTo(0, true).then(() => console.log('seek to finished'));
+  //    ytPlayer.playVideo().then(() => console.log('play video finished'));
+  //  }
+
+  //  ytPlayer.on('error', console.log);
+
+  //  ytPlayer.on('stateChange', (e) => {
+  //    console.log('state', e);
+  //    if (e.data === PlayerStates.ENDED) {
+  //      restartVideo();
+  //    }
+  //  });
+
+  //  setPlayer(ytPlayer);
+  //}, [hour, game, player, updateTrack])
+
   return (
     <div className='bg-ac-beige h-screen pt-8 sm:bg-inherit sm:p-12 sm:flex'>
+      <div className='absolute -top-5 -left-5 w-0 h-0' id='player' />
       <div className='w-80 m-auto sm:mx-0 sm:w-72 sm:min-w-[18rem] rounded-[3.5rem] bg-ac-beige select-none px-8 pt-7 pb-12 h-fit'>
         <div className='flex text-ac-beige-dark'>
           <div className='grid grid-cols-3 grid-rows-3 mr-auto'>
@@ -315,7 +379,7 @@ export default function App() {
       <div className={`absolute top-0 left-0 sm:relative sm:ml-12 bg-ac-beige h-full w-full sm:w-auto sm:grow ${selectedApp ? 'scale-100 rounded-[3.5rem] brightness-100' : 'scale-0 rounded-[8rem] brightness-90'} transition-all`}>
         <div className='relative h-full'>
           {selectedApp && (
-            <div className='p-12 overflow-y-scroll'>
+            <div className='p-12 overflow-y-auto overflow-x-hidden'>
               <div className='flex'>
                 <div>
                   <p className='font-black text-4xl'>
