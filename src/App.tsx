@@ -50,16 +50,6 @@ const metaApps: ProjectApp[] = [
     type: 'website',
     createdAt: new Date(2022, 2, 14),
   },
-  {
-    id: -1,
-    name: 'test1',
-    image: '/cats/hayches_catshay.png',
-  },
-  {
-    id: -2,
-    name: 'test2',
-    image: '/cats/hayches_catshay.png',
-  }
 ];
 
 const apps: ProjectApp[] = [
