@@ -181,9 +181,11 @@ export default function App() {
     return result;
   }, []);
 
+  const queryAppId = new URLSearchParams(window.location.search).get('app');
+
   const [page, setPage] = useState(0);
   const [hoveredApp, setHoveredApp_] = useState<ProjectApp | undefined>(pages[page][0]);
-  const [selectedApp, setSelectedApp_] = useState<ProjectApp | undefined>(undefined);
+  const [selectedApp, setSelectedApp_] = useState<ProjectApp | undefined>(queryAppId ? [...metaApps, ...apps].find((a) => a.id === Number.parseInt(queryAppId)) : undefined);
 
   const setHoveredApp = useCallback(
     (value: ProjectApp | undefined) => {
