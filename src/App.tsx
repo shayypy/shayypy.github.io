@@ -87,6 +87,16 @@ const apps: ProjectApp[] = [
     createdAt: new Date(2020, 10, 18),
   },
   {
+    id: 8,
+    name: 'Realtools',
+    summary: 'A collection of user-focused tools for Horse Reality, a web-based horse genetics game. This project was recognized by the game\'s creators and had over 1,500 active monthly users before its deprecation.',
+    links: [{ url: 'https://realtools.shay.cat'}, { url: 'https://github.com/hr-tools', name: 'GitHub' }],
+    image: '/images/realtools.png',
+    type: 'website',
+    createdAt: new Date(2021, 5, 7),
+    defunctAt: new Date(2023, 1, 18),
+  },
+  {
     id: 4,
     name: 'Tabletop Hat',
     summary: 'A collection of fun tabletop games for the whole family',
