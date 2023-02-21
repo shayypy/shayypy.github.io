@@ -186,6 +186,7 @@ export default function App() {
   const [page, setPage] = useState(0);
   const [hoveredApp, setHoveredApp_] = useState<ProjectApp | undefined>(pages[page][0]);
   const [selectedApp, setSelectedApp_] = useState<ProjectApp | undefined>(queryAppId ? [...metaApps, ...apps].find((a) => a.id === Number.parseInt(queryAppId)) : undefined);
+  const [matrixPos, setMatrixPos_] = useState<[number, number]>([0, 0]);
 
   const setHoveredApp = useCallback(
     (value: ProjectApp | undefined) => {
@@ -210,50 +211,78 @@ export default function App() {
     []
   );
 
+  const setMatrixPos = useCallback(
+    (value: [number, number]) => {
+      const [ row, col ] = value;
+      if (row >= 0 && row < 3 && col >= 0 && col < 3) {
+        setMatrixPos_(value);
+      }
+    },
+    []
+  );
+
+  // Navigate phone UI with arrow keys + enter
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      const pageIds = pages[page].map((app) => app.id);
-      const indexOnPage = hoveredApp ? pageIds.indexOf(hoveredApp.id) : -1;
-      const row = Math.max(Math.ceil(indexOnPage / 3) - 1, 0);
-      const column = indexOnPage % 3;
+      const [ row, column ] = matrixPos;
 
       const getAppAt = (r: number, c: number, pageIndex?: number) => {
         const app = pages[pageIndex ?? page][(Math.max(r, 0) * 3) + Math.max(c, 0)]
+        console.log(r, c, app?.id);
         return app;
       }
 
       const code = e.code;
+      console.log('current', row, column, code);
       switch (code) {
         case 'KeyW':
         case 'ArrowUp': {
           const app = getAppAt(row - 1, column);
-          if (app) setHoveredApp(app);
+          if (app) {
+            setHoveredApp(app);
+            setMatrixPos([row - 1, column]);
+          }
           break;
         }
         case 'KeyS':
         case 'ArrowDown': {
           const app = getAppAt(row + 1, column);
-          if (app) setHoveredApp(app);
+          if (app) {
+            setHoveredApp(app);
+            setMatrixPos([row + 1, column]);
+          }
           break;
         }
         case 'KeyA':
         case 'ArrowLeft':
           if (column === 0 && page > 0) {
-            const app = getAppAt(row, 2, page - 1) ?? getAppAt(1, 2, page - 1) ?? getAppAt(0, 2, page - 1);
-            if (app) setHoveredApp(app);
+            const app = getAppAt(0, 2, page - 1);
+            if (app) {
+              setHoveredApp(app);
+              setMatrixPos([0, 2]);
+            }
           } else {
             const app = getAppAt(row, column - 1);
-            if (app) setHoveredApp(app);
+            if (app) {
+              setHoveredApp(app);
+              setMatrixPos([row, column - 1]);
+            }
           }
           break;
         case 'KeyD':
         case 'ArrowRight':
           if (column === 2 && page < pages.length - 1) {
-            const app = getAppAt(row, 0, page + 1) ?? getAppAt(1, 0, page + 1) ?? getAppAt(0, 0, page + 1);
-            if (app) setHoveredApp(app);
+            const app = getAppAt(0, 0, page + 1);
+            if (app) {
+              setHoveredApp(app);
+              setMatrixPos([0, 0]);
+            }
           } else {
             const app = getAppAt(row, column + 1);
-            if (app) setHoveredApp(app);
+            if (app) {
+              setHoveredApp(app);
+              setMatrixPos([row, column + 1]);
+            }
           }
           break;
         case 'Space':
@@ -271,7 +300,7 @@ export default function App() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [page, pages, hoveredApp, setHoveredApp, selectedApp, setSelectedApp])
+  }, [page, pages, hoveredApp, setHoveredApp, selectedApp, setSelectedApp, matrixPos, setMatrixPos])
 
   const scrollToPage = (num: number) => {
     const element = document.querySelector(`#page-${num}`);
