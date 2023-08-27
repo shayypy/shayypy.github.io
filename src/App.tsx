@@ -110,13 +110,14 @@ const apps: ProjectApp[] = [
   {
     id: 5,
     name: 'pollr',
-    summary: 'Pollr tweets a poll every day. Follow for polls',
+    summary: "Pollr tweeted a poll every day, but had to stop due to Twitter's API changes.",
     themeColor: '#000',
     themeTextColor: '#f91880',
     links: [{ url: 'https://pollr.shay.cat' }, { name: 'GitHub', url: 'https://github.com/shayypy/pollr' }],
     image: '/images/pollr.png',
     type: 'twitter',
     createdAt: new Date(2022, 0, 31),
+    defunctAt: new Date(2023, 5, 19),
   },
   {
     id: 6,
