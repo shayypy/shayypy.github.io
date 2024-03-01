@@ -454,7 +454,7 @@ export default function App() {
                   <ul>
                     {[
                       ...selectedApp.links,
-                      { name: 'Donate', url: 'https://paypal.com/paypalme/shaywantsmoney' },
+                      { name: 'Donate', url: 'https://pay.shay.cat' },
                     ].map((link) => {
                       return (
                         <li key={link.url}>
