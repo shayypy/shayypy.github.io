@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@types/youtube-player": "^5.5.7",
     "autoprefixer": "^10.4.8",
     "gh-pages": "^4.0.0",
