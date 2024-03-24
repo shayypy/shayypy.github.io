@@ -67,10 +67,14 @@ const apps: ProjectApp[] = [
   {
     id: 2,
     name: "Discohook",
-    summary: "Webhook message designer for Discord, plus a suite of tools for managing servers.",
+    summary:
+      "Webhook message designer for Discord, plus a suite of tools for managing servers.",
     themeColor: "#172025",
     themeTextColor: "#dff1ff",
-    links: [{ url: "https://discohook.app" }, { name: "Subscribe", url: "https://discohook.app/donate" }],
+    links: [
+      { url: "https://discohook.app" },
+      { name: "Subscribe", url: "https://discohook.app/donate" },
+    ],
     image: "https://discohook.app/logos/discohook_padding.svg",
     type: "discord",
     createdAt: new Date(2020, 9, 12),
