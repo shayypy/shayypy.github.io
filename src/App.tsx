@@ -66,13 +66,12 @@ const apps: ProjectApp[] = [
   },
   {
     id: 2,
-    name: "Discohook Utils",
-    summary: "Suite of utilities for discohook.app",
+    name: "Discohook",
+    summary: "Webhook message designer for Discord, plus a suite of tools for managing servers.",
     themeColor: "#172025",
     themeTextColor: "#dff1ff",
-    links: [{ url: "https://dutils.shay.cat" }],
-    image:
-      "https://cdn.discordapp.com/avatars/792842038332358656/da056550fd65a4d7e4636cb1707ca801.png?size=128",
+    links: [{ url: "https://discohook.app" }, { name: "Subscribe", url: "https://discohook.app/donate" }],
+    image: "https://discohook.app/logos/discohook_padding.svg",
     type: "discord",
     createdAt: new Date(2020, 9, 12),
   },
