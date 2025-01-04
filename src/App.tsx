@@ -54,15 +54,21 @@ const metaApps: ProjectApp[] = [
 
 const apps: ProjectApp[] = [
   {
-    id: 1,
-    name: "bearger",
-    summary: "Free & easy-to-use bot with no arbitrary limitations",
-    themeColor: "#ffd89d",
-    themeTextColor: "#9E5500",
-    links: [{ url: "https://bearger.app" }],
-    image: "https://bearger.app/i/the_boy.png",
+    id: 9,
+    name: "Puckway",
+    summary: "Hockey bot for non-NHL leagues, including live game notifications, player info, and pickems",
+    themeColor: "#412777",
+    themeTextColor: "#fff",
+    links: [
+      { url: "https://puckway.shay.cat" },
+      {
+        name: "GitHub",
+        url: "https://github.com/puckway/bot",
+      },
+    ],
+    image: "https://puckway.shay.cat/logos/logo.svg",
+    createdAt: new Date(2024, 0, 11),
     type: "discord",
-    createdAt: new Date(2019, 6, 1),
   },
   {
     id: 2,
@@ -78,6 +84,17 @@ const apps: ProjectApp[] = [
     image: "https://discohook.app/logos/discohook_padding.svg",
     type: "discord",
     createdAt: new Date(2020, 9, 12),
+  },
+  {
+    id: 1,
+    name: "bearger",
+    summary: "Free & easy-to-use bot with no arbitrary limitations",
+    themeColor: "#ffd89d",
+    themeTextColor: "#9E5500",
+    links: [{ url: "https://bearger.app" }],
+    image: "https://bearger.app/i/the_boy.png",
+    type: "discord",
+    createdAt: new Date(2019, 6, 1),
   },
   {
     id: 3,
@@ -96,7 +113,7 @@ const apps: ProjectApp[] = [
     id: 8,
     name: "Realtools",
     summary:
-      "A collection of user-focused tools for Horse Reality, a web-based horse genetics game. This project was recognized by the game's creators and had over 1,500 active monthly users before its deprecation.",
+      "A collection of user-focused tools for Horse Reality, a web-based horse genetics game. This project was recognized by the game's creators and had over 1,500 monthly active users before its deprecation.",
     links: [
       { url: "https://realtools.shay.cat" },
       { url: "https://github.com/hr-tools", name: "GitHub" },
@@ -144,22 +161,6 @@ const apps: ProjectApp[] = [
     image: "https://jerso.fun/images/jerso.png",
     type: "website",
     createdAt: new Date(2022, 5, 7),
-  },
-  {
-    id: 7,
-    name: "NHL Scorebug",
-    summary:
-      'A self-hosted scorebug for NHL games 🏒 (goals + shots), intended for display on a dedicated ~4" screen. Also features an in-app player browser for active games',
-    themeColor: "#ccfbf1",
-    themeTextColor: "#000",
-    links: [
-      {
-        name: "GitHub (screenshots!)",
-        url: "https://github.com/shayypy/nhl-scorebug",
-      },
-    ],
-    image: "/images/scorebug-sm.png",
-    createdAt: new Date(2022, 10, 5),
   },
 ];
 
