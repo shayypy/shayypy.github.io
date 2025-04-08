@@ -56,7 +56,8 @@ const apps: ProjectApp[] = [
   {
     id: 9,
     name: "Puckway",
-    summary: "Hockey bot for non-NHL leagues, including live game notifications, player info, and pickems",
+    summary:
+      "Hockey bot for non-NHL leagues, including live game notifications, player info, and pickems",
     themeColor: "#412777",
     themeTextColor: "#fff",
     links: [
@@ -136,6 +137,29 @@ const apps: ProjectApp[] = [
     createdAt: new Date(2021, 5, 17),
   },
   {
+    id: 10,
+    name: "FxGoComics",
+    summary:
+      "FxTwitter-type worker for fixing GoComics embeds in Discord (and other compatible platforms)",
+    themeColor: "#2F46AB",
+    themeTextColor: "#D8DFFD",
+    links: [{ url: "https://www.fxgocomics.com" }],
+    image: "https://www.fxgocomics.com/assets/fxgocomics-256w.png",
+    type: "discord",
+    createdAt: new Date(2025, 3, 7),
+  },
+  {
+    id: 6,
+    name: "jerso",
+    summary: "Fun little hockey jersey spotting game 🏒",
+    themeColor: "#e2e8f0",
+    themeTextColor: "#000",
+    links: [{ url: "https://jerso.fun" }],
+    image: "https://jerso.fun/images/jerso.png",
+    type: "website",
+    createdAt: new Date(2022, 5, 7),
+  },
+  {
     id: 5,
     name: "pollr",
     summary:
@@ -150,17 +174,6 @@ const apps: ProjectApp[] = [
     type: "twitter",
     createdAt: new Date(2022, 0, 31),
     defunctAt: new Date(2023, 5, 19),
-  },
-  {
-    id: 6,
-    name: "jerso",
-    summary: "Fun little hockey jersey spotting game 🏒",
-    themeColor: "#e2e8f0",
-    themeTextColor: "#000",
-    links: [{ url: "https://jerso.fun" }],
-    image: "https://jerso.fun/images/jerso.png",
-    type: "website",
-    createdAt: new Date(2022, 5, 7),
   },
 ];
 
