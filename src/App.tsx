@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 // @ts-ignore
 import DiscordLogoColor from "./Discord-Logo-Color.svg";
 // @ts-ignore
 import TwitterLogoColor from "./Twitter-Logo-Blue.svg";
+import i18n from "i18next";
+import { useTranslation, initReactI18next, Trans } from "react-i18next";
 //import YouTubePlayer from 'youtube-player';
 // @ts-ignore
 //import { GameAbbreviation, tracks } from './music.ts';
@@ -14,11 +16,69 @@ import TwitterLogoColor from "./Twitter-Logo-Blue.svg";
 //   - kk slider jukebox app for controlling playback/game to use soundtrack from
 // - ACNH background image on bigger screens
 
+i18n.use(initReactI18next).init({
+  resources: {
+    en: {
+      translation: {
+        summaries: {
+          0: "This website is shay.cat, and I made it. Design is based on the Nook Phone interface from Animal Crossing: New Horizons",
+          9: "Hockey bot for non-NHL leagues, including live game notifications, player info, and pickems",
+          5: "Pollr tweeted a poll every day, but had to stop due to Twitter's API changes.",
+          2: "Webhook message designer for Discord, plus a suite of tools for managing servers.",
+          3: "Posts statuspage.io incidents and maintenance updates to Discord channels",
+          8: "A collection of user-focused tools for Horse Reality, a web-based horse genetics game. This project was recognized by the game's creators and had over 1,500 monthly active users before its deprecation.",
+          10: "FxTwitter-type worker for fixing GoComics embeds in Discord (and other compatible platforms)",
+          1: "Free & easy-to-use bot with no arbitrary limitations",
+          4: "A collection of fun tabletop games for the whole family",
+          6: "Fun little hockey jersey spotting game 🏒",
+        },
+        released: "First released {{ date }}",
+        since: "Since {{ year }}",
+        sincePlatform: "Since {{ year }} on <icon/> <platform/>",
+        defunct: "{{ year }} — {{ end }}",
+        defunctPlatform: "{{ year }} — {{ end }} on <icon/> <platform/>",
+      },
+    },
+    ca: {
+      translation: {
+        summaries: {
+          0: "Aquest lloc web és shay.cat, i l'he fet jo. El disseny es basa en la interfície Nook Phone d'Animal Crossing: New Horizons",
+          9: 'Bot d\'hoquei per a lligues que no són de la NHL, que inclou notificacions de partits en directe, informació dels jugadors i un joc automatitzat de "pickems".',
+          5: "Pollr era un bot que tuitejava una enquesta cada dia, però es va aturar a causa dels canvis a l'API de Twitter.",
+          2: "Dissenyador de missatges Webhook per a Discord, a més d'un conjunt d'eines per a la gestió de servidors.",
+          3: "Publica incidents de statuspage.io i actualitzacions de manteniment als canals de Discord.",
+          8: "Una col·lecció d'eines per a Horse Reality, un joc de genètica de cavalls basat en web. Aquest projecte va ser reconegut pels creadors del joc i tenia més de 1.500 usuaris actius mensuals abans de la seva obsolescència.",
+          10: "Treballador similar a FxTwitter per arreglar incrustacions de GoComics a Discord (i altres plataformes compatibles)",
+          1: "Bot gratuït i fàcil d'utilitzar sense limitacions arbitràries",
+          4: "Una col·lecció de divertits jocs de taula i cartes per a tota la família",
+          6: "Un divertit joc on l'objectiu és detectar samarretes de la NHL entre la multitud 🏒",
+        },
+        Links: "Visita",
+        "You are here": "Tu estàs aquí",
+        Email: "Correu electrònic",
+        "Close App": "Tanca l'aplicació",
+        Donate: "Donar",
+        "Check it out!": "Fes-hi una ullada!",
+        Subscribe: "Subscriu-te",
+        released: "Publicat per primera vegada el {{ date }}",
+        since: "Des del {{ year }}",
+        sincePlatform: "Des del {{ year }} a <icon/> <platform/>",
+        defunct: "{{ year }} — {{ end }}",
+        defunctPlatform: "{{ year }} — {{ end }} a <icon/> <platform/>",
+      },
+    },
+  },
+  lng: "en",
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
 interface ProjectApp {
   id: number;
   name: string;
   image: string;
-  summary?: string;
   links?: { name?: string; url: string }[];
   type?: "discord" | "twitter" | "website";
   createdAt?: Date;
@@ -36,8 +96,6 @@ const metaApps: ProjectApp[] = [
   {
     id: 0,
     name: "shay.cat",
-    summary:
-      "This website is shay.cat, and I made it. Design is based on the Nook Phone interface from Animal Crossing: New Horizons",
     themeColor: "#eae6cd",
     themeTextColor: "#000",
     links: [
@@ -56,8 +114,6 @@ const apps: ProjectApp[] = [
   {
     id: 9,
     name: "Puckway",
-    summary:
-      "Hockey bot for non-NHL leagues, including live game notifications, player info, and pickems",
     themeColor: "#412777",
     themeTextColor: "#fff",
     links: [
@@ -74,8 +130,6 @@ const apps: ProjectApp[] = [
   {
     id: 2,
     name: "Discohook",
-    summary:
-      "Webhook message designer for Discord, plus a suite of tools for managing servers.",
     themeColor: "#172025",
     themeTextColor: "#dff1ff",
     links: [
@@ -89,7 +143,6 @@ const apps: ProjectApp[] = [
   {
     id: 1,
     name: "bearger",
-    summary: "Free & easy-to-use bot with no arbitrary limitations",
     themeColor: "#ffd89d",
     themeTextColor: "#9E5500",
     links: [{ url: "https://bearger.app" }],
@@ -100,8 +153,6 @@ const apps: ProjectApp[] = [
   {
     id: 3,
     name: "Statuspage",
-    summary:
-      "Posts statuspage.io incidents and maintenance updates to Discord channels",
     themeColor: "#fff",
     themeTextColor: "#000",
     links: [{ url: "https://sp.shay.cat" }],
@@ -113,8 +164,6 @@ const apps: ProjectApp[] = [
   {
     id: 8,
     name: "Realtools",
-    summary:
-      "A collection of user-focused tools for Horse Reality, a web-based horse genetics game. This project was recognized by the game's creators and had over 1,500 monthly active users before its deprecation.",
     links: [
       { url: "https://realtools.shay.cat" },
       { url: "https://github.com/hr-tools", name: "GitHub" },
@@ -127,7 +176,6 @@ const apps: ProjectApp[] = [
   {
     id: 4,
     name: "Tabletop Hat",
-    summary: "A collection of fun tabletop games for the whole family",
     themeColor: "#198fe4",
     themeTextColor: "#fff",
     links: [{ url: "https://tth.shay.cat" }],
@@ -139,8 +187,6 @@ const apps: ProjectApp[] = [
   {
     id: 10,
     name: "FxGoComics",
-    summary:
-      "FxTwitter-type worker for fixing GoComics embeds in Discord (and other compatible platforms)",
     themeColor: "#2F46AB",
     themeTextColor: "#D8DFFD",
     links: [{ url: "https://www.fxgocomics.com" }],
@@ -151,7 +197,6 @@ const apps: ProjectApp[] = [
   {
     id: 6,
     name: "jerso",
-    summary: "Fun little hockey jersey spotting game 🏒",
     themeColor: "#e2e8f0",
     themeTextColor: "#000",
     links: [{ url: "https://jerso.fun" }],
@@ -162,8 +207,6 @@ const apps: ProjectApp[] = [
   {
     id: 5,
     name: "pollr",
-    summary:
-      "Pollr tweeted a poll every day, but had to stop due to Twitter's API changes.",
     themeColor: "#000",
     themeTextColor: "#f91880",
     links: [
@@ -178,23 +221,13 @@ const apps: ProjectApp[] = [
 ];
 
 export default function App() {
-  //const [player, setPlayer] = useState<YouTubePlayerT | undefined>(undefined);
-  //const [game, setGame] = useState<GameAbbreviation>('acnh');
+  const { t } = useTranslation();
   const [now, setNow] = useState(new Date());
-  //const hour = now.getHours();
 
-  //useEffect(() => {
-  //  console.log('hour changed to', hour);
-  //}, [hour]);
-
-  //const updateTrack = useCallback(() => {
-  //  console.log('update track called')
-  //  if (player) {
-  //    const trackId = tracks[game][hour];
-  //    player.loadVideoById(trackId)
-  //    player.playVideo();
-  //  }
-  //}, [player, game, hour])
+  useEffect(() => {
+    const lang = localStorage.getItem("lang");
+    if (lang !== null) i18n.changeLanguage(lang);
+  }, []);
 
   useEffect(() => {
     const i = setInterval(() => {
@@ -259,7 +292,6 @@ export default function App() {
   }, []);
 
   // Navigate phone UI with arrow keys + enter
-  // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const [row, column] = matrixPos;
@@ -357,46 +389,6 @@ export default function App() {
     }
   };
 
-  // https://github.com/gajus/youtube-player/issues/99
-  //useEffect(() => {
-  //  console.log('effect called');
-  //  if (player) {
-  //    updateTrack();
-  //    return;
-  //  }
-
-  //  const trackId = tracks[game][hour];
-  //  console.log('new track id', trackId);
-
-  //  //const ytPlayer = YouTubePlayer('player', {
-  //  //  videoId: trackId,
-  //  //  playerVars: {
-  //  //    loop: 1,
-  //  //    playlist: trackId,  // https://stackoverflow.com/a/25781957
-  //  //  },
-  //  //});
-  //  const ytPlayer = YouTubePlayer('player');
-
-  //  ytPlayer.loadVideoById(trackId);
-  //  ytPlayer.playVideo().then(() => console.log('loaded & started video', trackId));
-
-  //  const restartVideo = () => {
-  //    ytPlayer.seekTo(0, true).then(() => console.log('seek to finished'));
-  //    ytPlayer.playVideo().then(() => console.log('play video finished'));
-  //  }
-
-  //  ytPlayer.on('error', console.log);
-
-  //  ytPlayer.on('stateChange', (e) => {
-  //    console.log('state', e);
-  //    if (e.data === PlayerStates.ENDED) {
-  //      restartVideo();
-  //    }
-  //  });
-
-  //  setPlayer(ytPlayer);
-  //}, [hour, game, player, updateTrack])
-
   return (
     <div className="bg-ac-beige h-screen pt-8 sm:bg-inherit sm:p-12 sm:flex">
       <div className="absolute -top-5 -left-5 w-0 h-0" id="player" />
@@ -420,7 +412,21 @@ export default function App() {
               minute: "2-digit",
             })}
           </p>
-          <div className="ml-auto w-4" />
+          <button
+            type="button"
+            className="ml-auto self-center opacity-60 hover:opacity-100 transition"
+            onClick={() => {
+              const code = i18n.language === "en" ? "ca" : "en";
+              i18n.changeLanguage(code);
+              localStorage.setItem("lang", code);
+            }}
+          >
+            <img
+              src={`/icons/flag-${i18n.language === "en" ? "us" : "ca"}.svg`}
+              className="object-cover object-left rounded h-5 w-7"
+              alt=""
+            />
+          </button>
         </div>
         <div className="my-4 font-bold text-center text-2xl">
           {hoveredApp?.name ?? "Shay Phone"}
@@ -430,16 +436,14 @@ export default function App() {
             return (
               <div key={i} id={`page-${i}`} className="min-w-[14rem]">
                 <div className="grid grid-cols-3 grid-rows-3 gap-4 my-2 mx-4">
-                  {p.map((app) => {
-                    return (
-                      <AppIcon
-                        key={app.id}
-                        app={app}
-                        hoverState={[hoveredApp, setHoveredApp]}
-                        selectState={[selectedApp, setSelectedApp]}
-                      />
-                    );
-                  })}
+                  {p.map((app) => (
+                    <AppIcon
+                      key={app.id}
+                      app={app}
+                      hoverState={[hoveredApp, setHoveredApp]}
+                      selectState={[selectedApp, setSelectedApp]}
+                    />
+                  ))}
                 </div>
               </div>
             );
@@ -482,29 +486,44 @@ export default function App() {
                   <p className="font-black text-4xl">{selectedApp.name}</p>
                   {selectedApp.createdAt && (
                     <div
-                      className="opacity-80 text-xl font-bold"
-                      title={`First released ${selectedApp.createdAt.toLocaleDateString()}`}
+                      className="opacity-80 text-lg font-medium"
+                      title={t("released", {
+                        replace: {
+                          date: selectedApp.createdAt.toLocaleDateString(),
+                        },
+                      })}
                     >
-                      {selectedApp.defunctAt ? (
-                        <>
-                          {selectedApp.createdAt.getFullYear()} &#x2014;{" "}
-                          {selectedApp.defunctAt.getFullYear()}
-                        </>
-                      ) : (
-                        <>Since {selectedApp.createdAt.getFullYear()}</>
-                      )}
-                      {selectedApp.type && typeSvgs[selectedApp.type] && (
-                        <>
-                          {" "}
-                          on{" "}
-                          <img
-                            src={typeSvgs[selectedApp.type]}
-                            className="w-6 h-6 inline"
-                            alt={selectedApp.type}
-                          />{" "}
-                          <span className="capitalize">{selectedApp.type}</span>
-                        </>
-                      )}
+                      <Trans
+                        i18nKey={
+                          selectedApp.type && typeSvgs[selectedApp.type]
+                            ? selectedApp.defunctAt
+                              ? "defunctPlatform"
+                              : "sincePlatform"
+                            : selectedApp.defunctAt
+                              ? "defunct"
+                              : "since"
+                        }
+                        values={{
+                          year: selectedApp.createdAt.getFullYear(),
+                          end: selectedApp.defunctAt?.getFullYear(),
+                        }}
+                        components={{
+                          icon: selectedApp.type ? (
+                            <img
+                              src={typeSvgs[selectedApp.type]}
+                              className="w-6 h-6 inline"
+                              alt={selectedApp.type}
+                            />
+                          ) : (
+                            <></>
+                          ),
+                          platform: (
+                            <span className="capitalize">
+                              {selectedApp.type}
+                            </span>
+                          ),
+                        }}
+                      />
                     </div>
                   )}
                 </div>
@@ -515,29 +534,30 @@ export default function App() {
                 />
               </div>
               <hr className="my-4 border border-ac-beige-dark" />
-              <p>{selectedApp.summary}</p>
+              <p>{t(`summaries.${selectedApp.id}`)}</p>
               {selectedApp.links && (
                 <>
                   <hr className="my-4 border border-ac-beige-dark" />
-                  <p className="font-black text-2xl">Links</p>
+                  <p className="font-black text-2xl">{t("Links")}</p>
                   <ul>
                     {[
-                      ...selectedApp.links,
-                      { name: "Donate", url: "https://pay.shay.cat" },
-                    ].map((link) => {
-                      return (
-                        <li key={link.url}>
-                          <a href={link.url} className="text-teal-600 group">
-                            &#x1f517;{" "}
-                            <span
-                              className={`group-hover:italic group-hover:after:content-['_~'] group-hover:before:content-['~_']`}
-                            >
-                              {link.name ?? "Check it out!"}
-                            </span>
-                          </a>
-                        </li>
-                      );
-                    })}
+                      ...selectedApp.links.map((link) => ({
+                        ...link,
+                        name: link.name ? t(link.name) : undefined,
+                      })),
+                      { name: t("Donate"), url: "https://pay.shay.cat" },
+                    ].map((link) => (
+                      <li key={link.url}>
+                        <a href={link.url} className="text-teal-600 group">
+                          &#x1f517;{" "}
+                          <span
+                            className={`group-hover:italic group-hover:after:content-['_~'] group-hover:before:content-['~_']`}
+                          >
+                            {link.name ?? t("Check it out!")}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </>
               )}
@@ -548,7 +568,7 @@ export default function App() {
               type="button"
               className="rounded-full flex mx-auto border-2 border-t-4 hover:bg-ac-beige-dark/30 transition-colors border-ac-beige-dark w-12 h-12"
               onClick={() => setSelectedApp(undefined)}
-              title="Close App"
+              title={t("Close App")}
             />
           </div>
         </div>
