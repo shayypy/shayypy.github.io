@@ -427,7 +427,10 @@ export default function App() {
             <button
               type="button"
               className="ml-auto self-center opacity-60 hover:opacity-100 transition"
-              // I thought it was kind of confusing to have a link and a button which do roughly the same thing
+              // I thought it was kind of confusing to have a link and a
+              // button which do roughly the same thing so we disable this
+              // button when a language is explicitly selected via the
+              // pathname
               disabled={pathLang !== undefined}
               onClick={() => {
                 const code = i18n.language === "en" ? "ca" : "en";
