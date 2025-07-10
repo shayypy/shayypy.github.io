@@ -224,9 +224,20 @@ export default function App() {
   const { t } = useTranslation();
   const [now, setNow] = useState(new Date());
 
+  i18n.on("languageChanged", (lang) => {
+    document.documentElement.lang = lang;
+  });
+
+  const [pathLang, setPathLang] = useState<string>();
   useEffect(() => {
-    const lang = localStorage.getItem("lang");
-    if (lang !== null) i18n.changeLanguage(lang);
+    const { pathname } = window.location;
+    if (pathname === "/ca") {
+      i18n.changeLanguage("ca");
+      setPathLang("ca");
+    } else {
+      const lang = localStorage.getItem("lang");
+      if (lang !== null) i18n.changeLanguage(lang);
+    }
   }, []);
 
   useEffect(() => {
@@ -392,48 +403,51 @@ export default function App() {
   return (
     <div className="bg-ac-beige h-screen pt-8 sm:bg-inherit sm:p-12 sm:flex">
       <div className="absolute -top-5 -left-5 w-0 h-0" id="player" />
-      <div className="w-80 m-auto sm:mx-0 sm:w-72 sm:min-w-[18rem] rounded-[3.5rem] bg-ac-beige select-none px-8 pt-7 pb-12 h-fit">
-        <div className="flex text-ac-beige-dark">
-          <div className="grid grid-cols-3 grid-rows-3 mr-auto">
-            <div />
-            <div />
-            <SignalHump />
-            <div />
-            <SignalHump />
-            <SignalHump />
-            <SignalHump />
-            <SignalHump />
-            <SignalHump />
+      <div className="m-auto h-full flex flex-col">
+        <div className="w-80 m-auto sm:mx-0 sm:w-72 sm:min-w-[18rem] rounded-[3.5rem] bg-ac-beige select-none px-8 pt-7 pb-12 h-fit">
+          <div className="flex text-ac-beige-dark">
+            <div className="grid grid-cols-3 grid-rows-3 mr-auto">
+              <div />
+              <div />
+              <SignalHump />
+              <div />
+              <SignalHump />
+              <SignalHump />
+              <SignalHump />
+              <SignalHump />
+              <SignalHump />
+            </div>
+            {/* Cat icon */}
+            <p className="mx-auto font-semibold tracking-wider">
+              {now.toLocaleTimeString(undefined, {
+                hour: "numeric",
+                minute: "2-digit",
+              })}
+            </p>
+            <button
+              type="button"
+              className="ml-auto self-center opacity-60 hover:opacity-100 transition"
+              // I thought it was kind of confusing to have a link and a button which do roughly the same thing
+              disabled={pathLang !== undefined}
+              onClick={() => {
+                const code = i18n.language === "en" ? "ca" : "en";
+                i18n.changeLanguage(code);
+                localStorage.setItem("lang", code);
+              }}
+            >
+              <img
+                src={`/icons/flag-${i18n.language === "en" ? "us" : "ca"}.svg`}
+                className="object-cover object-left rounded h-5 w-7"
+                alt=""
+              />
+            </button>
           </div>
-          {/* Cat icon */}
-          <p className="mx-auto font-semibold tracking-wider">
-            {now.toLocaleTimeString(undefined, {
-              hour: "numeric",
-              minute: "2-digit",
-            })}
-          </p>
-          <button
-            type="button"
-            className="ml-auto self-center opacity-60 hover:opacity-100 transition"
-            onClick={() => {
-              const code = i18n.language === "en" ? "ca" : "en";
-              i18n.changeLanguage(code);
-              localStorage.setItem("lang", code);
-            }}
-          >
-            <img
-              src={`/icons/flag-${i18n.language === "en" ? "us" : "ca"}.svg`}
-              className="object-cover object-left rounded h-5 w-7"
-              alt=""
-            />
-          </button>
-        </div>
-        <div className="my-4 font-bold text-center text-2xl">
-          {hoveredApp?.name ?? "Shay Phone"}
-        </div>
-        <div className="overflow-x-hidden flex max-w-[20rem] sm:max-w-[18rem]">
-          {pages.map((p, i) => {
-            return (
+          <div className="my-4 font-bold text-center text-2xl">
+            {hoveredApp?.name ?? "Shay Phone"}
+          </div>
+          <div className="overflow-x-hidden flex max-w-[20rem] sm:max-w-[18rem]">
+            {pages.map((p, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: fine key, won't change
               <div key={i} id={`page-${i}`} className="min-w-[14rem]">
                 <div className="grid grid-cols-3 grid-rows-3 gap-4 my-2 mx-4">
                   {p.map((app) => (
@@ -446,30 +460,44 @@ export default function App() {
                   ))}
                 </div>
               </div>
-            );
-          })}
-        </div>
-        {pages.length > 1 && (
-          <div className="mt-6 -mb-4 w-full flex">
-            <div className="mx-auto flex space-x-2">
-              {pages.map((_, i) => (
-                <button
-                  type="button"
-                  key={`page-${i}`}
-                  onClick={() => {
-                    scrollToPage(i);
-                    setHoveredApp(pages[i][0]);
-                  }}
-                  className={`rounded-full bg-ac-beige-dark w-2 h-2 transition-all outline ${
-                    page === i
-                      ? "outline-4 outline-offset-1 outline-teal-500"
-                      : "outline-transparent"
-                  }`}
-                />
-              ))}
-            </div>
+            ))}
           </div>
-        )}
+          {pages.length > 1 && (
+            <div className="mt-6 -mb-4 w-full flex flex-col">
+              <div className="mx-auto flex space-x-2">
+                {pages.map((_, i) => (
+                  <button
+                    type="button"
+                    // biome-ignore lint/suspicious/noArrayIndexKey: fine key, won't change
+                    key={`page-${i}`}
+                    onClick={() => {
+                      scrollToPage(i);
+                      setHoveredApp(pages[i][0]);
+                    }}
+                    className={`rounded-full bg-ac-beige-dark w-2 h-2 transition-all outline ${
+                      page === i
+                        ? "outline-4 outline-offset-1 outline-teal-500"
+                        : "outline-transparent"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="mx-auto mt-0 mb-4">
+          <a
+            href={pathLang === "ca" ? "/" : "/ca"}
+            className="text-sm text-ac-beige-dark brightness-75 sm:text-ac-beige underline hover:no-underline"
+            onClick={() => {
+              if (pathLang === "ca") {
+                localStorage.setItem("lang", "en");
+              }
+            }}
+          >
+            {pathLang === "ca" ? "English Version" : "Versió Català"}
+          </a>
+        </div>
       </div>
       <div
         className={`absolute top-0 left-0 sm:relative sm:ml-12 bg-ac-beige h-full w-full sm:w-auto sm:grow ${
